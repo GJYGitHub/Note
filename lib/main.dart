@@ -6,7 +6,7 @@ import 'my_app.dart';
 
 void main() {
   runApp(ChangeNotifierProvider<NoteProvider>(
-    create:(context)=>GlobalConfig.note,
+    create:(context)=>NoteProvider(),
     child: MyApp(),
   ));
 }

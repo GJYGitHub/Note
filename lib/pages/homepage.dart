@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     NoteProvider noteProvider = Provider.of<NoteProvider>(context);
     noteProvider.updateListView();
     return Scaffold(
-      appBar: getAppBar(context),
+      appBar: GetAppBar().getAppBar(context),
       body: GetListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

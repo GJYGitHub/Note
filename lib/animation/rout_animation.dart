@@ -17,7 +17,7 @@ class  SlidingAroundRoute extends PageRouteBuilder{
           Animation<double>animation2,
           Widget child
           ){
-        //左右滑动路由动画
+        ///左右滑动路由动画
         return SlideTransition(
           position: Tween<Offset>(
             begin: Offset(1.0,0.0),

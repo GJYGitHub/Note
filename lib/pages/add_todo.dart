@@ -5,25 +5,17 @@ import 'package:note/model/todo.dart';
 import 'package:date_format/date_format.dart';
 
 class AddTodoPage extends StatefulWidget {
-  AddTodoPage({Key? key, this.hitTitle = '', this.hitDescription = ''})
-      : super(key: key);
-  String hitTitle;
-  String hitDescription;
+  AddTodoPage({Key? key}) : super(key: key);
 
   @override
-  _AddTodoPageState createState() => _AddTodoPageState(
-      hitTitle: this.hitTitle, hitDescription: this.hitDescription);
+  _AddTodoPageState createState() => _AddTodoPageState();
 }
 
 class _AddTodoPageState extends State<AddTodoPage> {
-  _AddTodoPageState({this.hitTitle = '', this.hitDescription = ''});
-
   DatabaseHelper helper = DatabaseHelper();
   Todo todo = Todo();
   String title = '';
   String description = '';
-  String hitTitle;
-  String hitDescription;
 
   ///保存插入的数据
   void _save() async {
@@ -35,8 +27,8 @@ class _AddTodoPageState extends State<AddTodoPage> {
     if (todo.title != "" && todo.description != "") {
       await helper.insertTodo(todo);
     }
-    GlobalConfig.note.updateListView();
     Navigator.pop(context);
+    helper.close();
   }
 
   @override
@@ -72,7 +64,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
 
             ///正在编辑的文本样式
             decoration: InputDecoration(
-                hintText: '${hitTitle.length == 0 ? '标题' : hitTitle}',
+                hintText: '标题',
                 hintStyle: TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black26),
                 border: InputBorder.none),
@@ -96,8 +88,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
 
             ///无行数限制
             decoration: InputDecoration(
-                hintText:
-                    '${hitDescription.length == 0 ? '记事' : hitDescription}',
+                hintText: '记事',
                 hintStyle: TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.black26),
                 border: InputBorder.none),

@@ -39,7 +39,6 @@ class _UpdateTodoPageState extends State<UpdateTodoPage> {
     if (todo.title != "" && todo.description != "") {
       await helper.updateTodo(todo);
     }
-    GlobalConfig.note.updateListView();
     Navigator.pop(context);
   }
 
@@ -61,11 +60,6 @@ class _UpdateTodoPageState extends State<UpdateTodoPage> {
               Icons.arrow_back_ios,
               color: Colors.black,
             )),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Image.asset('images/elipsis-v.png', width: 25, height: 25)),
-        ],
       ),
       body: ListView(
         padding: EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 0),

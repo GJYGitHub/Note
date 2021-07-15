@@ -1,4 +1,4 @@
- import 'package:note/model/todo.dart';
+import 'package:note/model/todo.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -28,16 +28,28 @@ class DatabaseHelper {
     return todoList;
   }
 
-  // Future<List<Todo>> getListById(Todo todo) async {
-  //   var result = await noteDatabase
-  //       .query('note_table', where: "id=?", whereArgs: [todo.id]);
-  //   return result;
-  // }
-
   ///查
   Future<List<Map<String, dynamic>>> getTodoMapList() async {
     var result = await noteDatabase.query('note_table', orderBy: 'id ASC');
     return result;
+  }
+
+  ///通过关键字查询数据
+  Future<List<Todo>?> getNoteByContent(String text) async {
+    List<Todo> todoList = <Todo>[];
+    if (text.length != 0) {
+      var maps = await noteDatabase.query('note_table',
+          where: 'description like ? ORDER BY date ASC',
+          whereArgs: ["%" + text + "%"]);
+      if (maps.length > 0) {
+        for (int i = 0; i < maps.length; i++) {
+          todoList.add(Todo.fromMapObject(maps.elementAt(i)));
+        }
+        return todoList;
+      }
+    }else{
+      return null;
+    }
   }
 
   ///改
@@ -59,4 +71,7 @@ class DatabaseHelper {
     var result = await noteDatabase.insert('note_table', todo.toMap());
     return result;
   }
+
+  ///关闭数据库
+  Future close() => noteDatabase.close();
 }
